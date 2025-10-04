@@ -49,7 +49,7 @@
             <footer class="bg-white border-t border-gray-200 mt-auto">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600">
-                        <p>&copy; {{ date('Y') }} Recipe Planner MVP. Todos los derechos reservados.</p>
+                        <p>&copy; {{ date('Y') }} 4Life. Todos los derechos reservados.</p>
                         <div class="flex space-x-4 mt-2 sm:mt-0">
                             <a href="#" class="hover:text-emerald-600 transition">Soporte</a>
                             <a href="#" class="hover:text-emerald-600 transition">Privacidad</a>
