@@ -40,5 +40,12 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Users created:');
         $this->command->info('Admin: admin@recipeapp.com / password');
         $this->command->info('User: user@recipeapp.com / password');
+
+        // Seed ingredients, recipes, and plans
+        $this->call([
+            IngredientSeeder::class,
+            RecipeSeeder::class,
+            PlanSeeder::class,
+        ]);
     }
 }
