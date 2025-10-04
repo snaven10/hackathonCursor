@@ -1,13 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-            Buscar Recetas por Ingredientes
-        </h2>
+        <div>
+            <h2 class="font-bold text-3xl text-emerald-600">
+                Buscar Recetas
+            </h2>
+            <p class="text-sm text-gray-600 mt-1">Encuentra recetas según los ingredientes que tienes disponibles</p>
+        </div>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Search Form -->
-        <x-card class="mb-6">
+        <div class="bg-white rounded-2xl shadow-md p-6 mb-8 border-t-4 border-emerald-500">
             <form action="{{ route('recipes.search') }}" method="GET">
                 <div class="space-y-4">
                     <div>
@@ -38,7 +41,7 @@
                     </div>
                 </div>
             </form>
-        </x-card>
+        </div>
 
         <!-- Results -->
         @if(count($selectedIngredients) > 0)
@@ -51,11 +54,11 @@
             @if($recipes->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($recipes as $recipe)
-                        <x-card class="hover:shadow-xl transition-shadow">
-                            <div class="space-y-3">
+                        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-t-2 border-emerald-500">
+                            <div class="p-6 space-y-3">
                                 <div class="flex justify-between items-start">
-                                    <h3 class="text-xl font-semibold text-gray-800">{{ $recipe->title }}</h3>
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    <h3 class="text-xl font-bold text-gray-800">{{ $recipe->title }}</h3>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
                                         {{ $recipe->match_count }} {{ $recipe->match_count === 1 ? 'coincidencia' : 'coincidencias' }}
                                     </span>
                                 </div>
@@ -105,7 +108,7 @@
                                     </x-button>
                                 </div>
                             </div>
-                        </x-card>
+                        </div>
                     @endforeach
                 </div>
             @else
