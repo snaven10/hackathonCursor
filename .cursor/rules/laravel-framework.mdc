@@ -1,0 +1,134 @@
+---
+description: Laravel + Blade + TailwindCSS development rules and conventions.
+globs:
+  - "**/*.php"
+  - "resources/views/**/*.blade.php"
+  - "resources/css/**/*.css"
+alwaysApply: true
+---
+
+# Laravel + Blade + TailwindCSS Rules
+
+## Framework Context
+
+This project uses **Laravel 11**, **Blade templates**, and **TailwindCSS** for styling.  
+Cursor must assume a **traditional full-stack Laravel app**, not an API-only project.
+
+All generated code must be compatible with:
+- Laravel 11+
+- PHP 8.3+
+- Blade templates for the UI layer
+- TailwindCSS v3+ for all styling
+- MariaDB (database)
+
+---
+
+## Project Structure Conventions
+
+1. **Artisan Commands**
+   - Use Laravel’s built-in commands for generating components:
+     - `php artisan make:model`
+     - `php artisan make:controller`
+     - `php artisan make:service`
+     - `php artisan make:request`
+     - `php artisan make:view`
+   - Follow standard Laravel folder structure:
+     ```
+     app/
+     resources/views/
+     public/css/
+     ```
+
+2. **Controllers**
+   - Controllers should only coordinate logic between the Service layer and Blade views.
+   - Avoid embedding HTML or heavy logic directly inside controllers.
+   - Example:  
+     ```php
+     return view('recipes.index', ['recipes' => $recipes]);
+     ```
+
+3. **Blade Templates**
+   - Use `.blade.php` for all UI rendering.
+   - Must include reusable partials and components (`resources/views/components/`).
+   - Use Laravel’s `@extends`, `@section`, and `@include` directives.
+   - No inline PHP logic in Blade; all logic belongs in controllers or view composers.
+   - Example:
+     ```blade
+     <x-layout>
+       <x-recipe-card :recipe="$recipe" />
+     </x-layout>
+     ```
+
+4. **TailwindCSS Styling**
+   - Use **TailwindCSS** utility classes for all layout and design.
+   - Avoid custom CSS unless absolutely necessary; keep it minimal under `resources/css/app.css`.
+   - Follow the default Tailwind config (`tailwind.config.js`).
+   - Cursor should generate markup that uses Tailwind classes like:
+     - `flex`, `grid`, `rounded-xl`, `shadow-md`, `p-4`, `text-gray-700`
+   - Never use inline styles (e.g., `style="..."`).
+
+5. **Frontend Assets**
+   - Use **Vite** (default in Laravel 11) for asset bundling.
+   - All Blade templates must include the Vite directive:
+     ```blade
+     @vite(['resources/css/app.css', 'resources/js/app.js'])
+     ```
+   - No jQuery; prefer Alpine.js for interactivity if needed.
+   - Cursor should generate small Alpine snippets for UI behavior when required.
+
+6. **Eloquent Models**
+   - Use Eloquent ORM conventions: `hasMany`, `belongsTo`, `belongsToMany`.
+   - Always define `$fillable` and `$casts` properties.
+   - Use eager loading (`with()`) for performance.
+
+7. **Dependency Injection**
+   - Inject dependencies via constructor or method type hints.
+   - Avoid `new` keyword inside controllers or services.
+
+8. **Validation**
+   - Use Form Request classes (`php artisan make:request`) for input validation.
+   - Validate user inputs before saving or querying the database.
+
+9. **Routing**
+   - Group routes by prefix (e.g., `Route::prefix('recipes')->group(...)`).
+   - Routes should point to Controllers returning Blade views.
+   - Use named routes for clean redirects (`route('recipes.index')`).
+
+10. **Authentication / Authorization**
+    - Use **Spatie** for roles and permissions.
+    - Use **Laravel Breeze** for authentication scaffolding.
+    - No custom session or password logic.
+
+11. **Error Handling / UX**
+    - Use Laravel’s `@error` directive in Blade forms.
+    - All errors must be displayed elegantly via Tailwind alert components.
+    - Example:
+      ```blade
+      @error('email')
+        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+      @enderror
+      ```
+
+12. **Environment and Configuration**
+    - Sensitive data (API keys, DB, etc.) must go in `.env`.
+    - Use `config()` helper for environment-specific settings.
+
+13. **Testing**
+    - For each controller or service, generate corresponding feature/unit tests.
+    - Use Laravel testing helpers and `RefreshDatabase` trait.
+
+---
+
+## Behavioral Rules for Cursor
+
+1. Always assume this is a **Laravel Blade + TailwindCSS** project.
+2. Never generate React, Vue, or InertiaJS code.
+3. When generating a new page, Cursor should:
+   - Create a controller method (e.g., `index`, `show`, `store`).
+   - Generate the corresponding Blade view.
+   - Use Tailwind for layout.
+4. When creating forms:
+   - Use `@csrf` and `@method` directives.
+   - Apply Tailwind form styles (`border`, `rounded`, `focus:ring`).
+5. Cursor should respect this architecture at all times,  
+   and never alter unrelated modules or framework defaults.
