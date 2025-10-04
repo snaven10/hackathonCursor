@@ -29,7 +29,20 @@
         @endisset
 
         <!-- Page Content -->
-        <main>
+        <main class="py-6">
+            <!-- Flash Messages -->
+            @if (session('success'))
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+                    <x-alert type="success" :message="session('success')" />
+                </div>
+            @endif
+            
+            @if (session('error'))
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+                    <x-alert type="error" :message="session('error')" />
+                </div>
+            @endif
+            
             {{ $slot }}
         </main>
     </div>
