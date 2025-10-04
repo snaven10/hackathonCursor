@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('recipes.search')" :active="request()->routeIs('recipes.search')">
                         Buscar Recetas
                     </x-nav-link>
+                    <x-nav-link :href="route('plans.index')" :active="request()->routeIs('plans.*')">
+                        Planificador
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -87,6 +90,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('recipes.search')" :active="request()->routeIs('recipes.search')">
                 Buscar Recetas
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('plans.index')" :active="request()->routeIs('plans.*')">
+                Planificador
             </x-responsive-nav-link>
         </div>
 

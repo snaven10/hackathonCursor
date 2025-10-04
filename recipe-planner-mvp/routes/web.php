@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\GoogleIntegrationController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\PlanController;
+use App\Http\Controllers\PlanItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RecipeSearchController;
@@ -30,6 +33,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Recipes Routes
     Route::get('/recipes/search', [RecipeSearchController::class, 'search'])->name('recipes.search');
     Route::resource('recipes', RecipeController::class);
+
+    // Plans Routes
+    Route::get('/plans/{plan}/shopping-list', [PlanController::class, 'shoppingList'])->name('plans.shopping-list');
+    Route::get('/plans/{plan}/download-shopping-list', [PlanController::class, 'downloadShoppingList'])->name('plans.download-shopping-list');
+    Route::resource('plans', PlanController::class);
+
+    // Plan Items Routes
+    Route::post('/plan-items', [PlanItemController::class, 'store'])->name('plan-items.store');
+    Route::put('/plan-items/{planItem}', [PlanItemController::class, 'update'])->name('plan-items.update');
+    Route::delete('/plan-items/{planItem}', [PlanItemController::class, 'destroy'])->name('plan-items.destroy');
+
+    // Google Calendar Integration (opcional)
+    Route::get('/google/redirect', [GoogleIntegrationController::class, 'redirectToGoogle'])->name('google.redirect');
+    Route::get('/google/callback', [GoogleIntegrationController::class, 'handleCallback'])->name('google.callback');
+    Route::post('/plans/{plan}/export', [GoogleIntegrationController::class, 'exportPlanToCalendar'])->name('plans.export');
 });
 
 require __DIR__.'/auth.php';
