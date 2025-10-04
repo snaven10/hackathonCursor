@@ -91,7 +91,7 @@
                             </p>
                         </div>
                         <div class="hidden md:block">
-                            <img src="{{ asset('logo.png') }}" alt="Recipe Planner" class="h-12 w-12 rounded-lg shadow-xl opacity-90">
+                            <img src="{{ asset('logo.png') }}" alt="Recipe Planner" class="h-14 w-14 rounded-lg shadow-xl opacity-90">
                         </div>
                     </div>
                     
