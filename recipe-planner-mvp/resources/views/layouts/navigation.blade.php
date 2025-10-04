@@ -5,11 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
-                        <img src="{{ asset('logo.png') }}" alt="Recipe Planner" width="60" height="60" class="rounded-md shadow">
-                        <span class="text-lg font-bold text-emerald-600">
-                            Recipe Planner
-                        </span>
+                    <a href="{{ route('dashboard') }}" title="4life - Ir al Dashboard">
+                        <img src="{{ asset('logo.png') }}" alt="4life" width="40" height="40" class="rounded-lg shadow hover:shadow-lg transition-shadow duration-200">
                     </a>
                 </div>
 
