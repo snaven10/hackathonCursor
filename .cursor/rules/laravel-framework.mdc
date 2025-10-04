@@ -1,5 +1,6 @@
 ---
 description: Global Laravel + Blade + TailwindCSS development rules and conventions.
+context: context7
 globs:
   - "**/*.php"
   - "resources/views/**/*.blade.php"
