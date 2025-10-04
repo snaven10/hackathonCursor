@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('google_calendar_events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('plan_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('plan_item_id')->constrained()->cascadeOnDelete();
+            $table->string('google_event_id');
+            $table->dateTime('event_start');
+            $table->dateTime('event_end');
             $table->timestamps();
         });
     }

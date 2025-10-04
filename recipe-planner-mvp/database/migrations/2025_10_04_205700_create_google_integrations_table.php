@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('google_integrations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->text('access_token');
+            $table->text('refresh_token')->nullable();
+            $table->timestamp('token_expires_at')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
+            
+            $table->unique('user_id');
         });
     }
 
