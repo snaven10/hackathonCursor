@@ -1,0 +1,36 @@
+---
+description: Global coding and architectural rules for the Laravel Recipe & Meal Planner MVP.
+globs:
+  - "**/*.php"
+alwaysApply: true
+---
+
+# Global Code Rules
+
+1. Follow **PSR-12** coding style (4-space indentation, new line braces, clear naming).
+2. All methods and classes **must include type hints** for parameters and return types whenever possible.
+3. Use **dependency injection** instead of creating new instances inside controllers or services.
+4. **Keep controllers thin** — business logic should live inside Services or Actions.
+5. Use **Form Request classes** for validation instead of inline validation inside controllers.
+6. **Size limits**:
+   - Max class size: 500 lines.
+   - Max method size: 40 lines.
+7. **Comment only when necessary** — focus on explaining *why*, not *what* the code does.
+8. Always use **constructor property promotion** (PHP 8.0+) when declaring class dependencies.
+9. Avoid duplicated code — create **Traits, Helpers, or base Services** for reuse.
+10. If an existing Laravel package already solves a problem (e.g., **Spatie**, **Laravel Breeze**, **Sanctum**), **reuse it** instead of reinventing.
+
+---
+
+# Project Integration Rules
+
+1. Keep **all migrations centralized** in `database/migrations/`.
+2. Each module (Recipes, Planning, Ingredients, ShoppingList) only handles **logic**, not schema changes.
+3. Use **Redis** for cache and **PostgreSQL** for persistent storage.
+4. Store sensitive data in `.env`, never hardcoded.
+5. Maintain compatibility with **PHP 8.3+** and **Laravel 11**.
+6. Every module must have a clear boundary:
+   - Shared data (users, ingredients, recipes) belongs to global migrations.
+   - Each module communicates only through its own Service layer.
+7. All new routes must be **grouped by prefix** and linked from `routes/web.php` or `routes/api.php`.
+8. Cursor must **never modify unrelated modules** — only files in its current working context.
