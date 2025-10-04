@@ -7,7 +7,33 @@
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white rounded-lg shadow-md p-6">
-            <form action="{{ $isEdit ? route('recipes.update', $recipe) : route('recipes.store') }}" method="POST" x-data="recipeForm()">
+            <form action="{{ $isEdit ? route('recipes.update', $recipe) : route('recipes.store') }}" method="POST" x-data="{
+                ingredients: @json($isEdit ? $recipe->ingredients->map(function($ing) {
+                    return [
+                        'id' => $ing->id,
+                        'quantity' => $ing->pivot->quantity,
+                        'unit' => $ing->pivot->unit
+                    ];
+                })->values() : []),
+                
+                init() {
+                    if (this.ingredients.length === 0) {
+                        this.addIngredient();
+                    }
+                },
+                
+                addIngredient() {
+                    this.ingredients.push({
+                        id: '',
+                        quantity: '',
+                        unit: ''
+                    });
+                },
+                
+                removeIngredient(index) {
+                    this.ingredients.splice(index, 1);
+                }
+            }">
                 @csrf
                 @if($isEdit)
                     @method('PUT')
@@ -90,7 +116,7 @@
                             <label class="block text-sm font-medium text-gray-700">
                                 Ingredientes <span class="text-red-500">*</span>
                             </label>
-                            <button type="button" @click="addIngredient()" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                            <button type="button" @click="addIngredient()" class="text-emerald-600 hover:text-emerald-700 text-sm font-medium">
                                 + Agregar Ingrediente
                             </button>
                         </div>
@@ -106,7 +132,7 @@
                                     <div class="flex-1">
                                         <select 
                                             :name="'ingredients[' + index + '][id]'" 
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
                                             required
                                         >
                                             <option value="">Seleccionar ingrediente</option>
@@ -126,7 +152,7 @@
                                             :name="'ingredients[' + index + '][quantity]'" 
                                             x-model="ingredient.quantity"
                                             placeholder="Cantidad"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
                                             required
                                         >
                                     </div>
@@ -138,7 +164,7 @@
                                             :name="'ingredients[' + index + '][unit]'" 
                                             x-model="ingredient.unit"
                                             placeholder="Unidad"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500"
                                         >
                                     </div>
 
@@ -163,51 +189,17 @@
 
                     <!-- Buttons -->
                     <div class="flex justify-end space-x-3 pt-4 border-t">
-                        <x-button type="secondary" :href="route('recipes.index')">
+                        <x-button variant="secondary" :href="route('recipes.index')">
                             Cancelar
                         </x-button>
-                        <x-button type="submit">
+                        <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200">
                             {{ $isEdit ? 'Actualizar' : 'Crear' }} Receta
-                        </x-button>
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
-    @push('scripts')
-    <script>
-        function recipeForm() {
-            return {
-                ingredients: @json($isEdit ? $recipe->ingredients->map(function($ing) {
-                    return [
-                        'id' => $ing->id,
-                        'quantity' => $ing->pivot->quantity,
-                        'unit' => $ing->pivot->unit
-                    ];
-                })->values() : []),
-                
-                addIngredient() {
-                    this.ingredients.push({
-                        id: '',
-                        quantity: '',
-                        unit: ''
-                    });
-                },
-                
-                removeIngredient(index) {
-                    this.ingredients.splice(index, 1);
-                },
-                
-                init() {
-                    // Start with one empty ingredient if none exist
-                    if (this.ingredients.length === 0) {
-                        this.addIngredient();
-                    }
-                }
-            }
-        }
-    </script>
-    @endpush
 </x-app-layout>
 
