@@ -23,7 +23,7 @@
                                         name="ingredients[]" 
                                         value="{{ $ingredient->id }}"
                                         {{ in_array($ingredient->id, $selectedIngredients) ? 'checked' : '' }}
-                                        class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                                     >
                                     <span class="text-sm text-gray-700">{{ $ingredient->name }}</span>
                                 </label>
@@ -32,9 +32,9 @@
                     </div>
 
                     <div class="flex justify-end">
-                        <x-button type="submit">
+                        <button type="submit" class="inline-flex items-center px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200">
                             Buscar Recetas
-                        </x-button>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -74,7 +74,7 @@
                                     <p class="text-xs text-gray-500 mb-2">Ingredientes que coinciden:</p>
                                     <div class="flex flex-wrap gap-1">
                                         @foreach($recipe->ingredients->whereIn('id', $selectedIngredients) as $ingredient)
-                                            <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
+                                            <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-emerald-100 text-emerald-800">
                                                 {{ $ingredient->name }}
                                             </span>
                                         @endforeach
@@ -100,7 +100,7 @@
                                 @endif
                                 
                                 <div class="pt-3">
-                                    <x-button :href="route('recipes.show', $recipe)" type="primary" class="w-full justify-center">
+                                    <x-button :href="route('recipes.show', $recipe)" class="w-full justify-center">
                                         Ver Receta Completa
                                     </x-button>
                                 </div>
