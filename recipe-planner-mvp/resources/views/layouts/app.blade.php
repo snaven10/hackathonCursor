@@ -14,36 +14,50 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased bg-gray-50">
+        <div class="min-h-screen flex flex-col">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow">
+                <header class="bg-white shadow-sm">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
 
+            <!-- Flash Messages -->
+            @if (session('success'))
+                <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4">
+                    <x-alert type="success" :message="session('success')" />
+                </div>
+            @endif
+            
+            @if (session('error'))
+                <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4">
+                    <x-alert type="error" :message="session('error')" />
+                </div>
+            @endif
+
             <!-- Page Content -->
-            <main>
-                <!-- Flash Messages -->
-                @if (session('success'))
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                        <x-alert type="success" :message="session('success')" />
-                    </div>
-                @endif
-                
-                @if (session('error'))
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                        <x-alert type="error" :message="session('error')" />
-                    </div>
-                @endif
-                
+            <main class="flex-1">
                 {{ $slot }}
             </main>
+
+            <!-- Footer -->
+            <footer class="bg-white border-t border-gray-200 mt-auto">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600">
+                        <p>&copy; {{ date('Y') }} Recipe Planner MVP. Todos los derechos reservados.</p>
+                        <div class="flex space-x-4 mt-2 sm:mt-0">
+                            <a href="#" class="hover:text-emerald-600 transition">Soporte</a>
+                            <a href="#" class="hover:text-emerald-600 transition">Privacidad</a>
+                            <a href="#" class="hover:text-emerald-600 transition">Términos</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
