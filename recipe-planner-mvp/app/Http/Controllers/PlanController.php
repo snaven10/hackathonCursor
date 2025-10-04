@@ -23,8 +23,7 @@ class PlanController extends Controller
      */
     public function index(): View
     {
-        $plans = auth()->user()
-            ->plans()
+        $plans = Plan::where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
         
@@ -52,7 +51,8 @@ class PlanController extends Controller
             'meals_per_day' => ['required', 'integer', 'min:1', 'max:5'],
         ]);
 
-        $plan = auth()->user()->plans()->create($validated);
+        $validated['user_id'] = auth()->id();
+        $plan = Plan::create($validated);
         
         return redirect()
             ->route('plans.show', $plan)
