@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
-                        <img src="{{ asset('logo.png') }}" alt="Recipe Planner" class="h-8 w-8 rounded-md shadow">
+                        <img src="{{ asset('logo.png') }}" alt="Recipe Planner" width="28" height="28" class="rounded-md shadow">
                         <span class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                             Recipe Planner
                         </span>
